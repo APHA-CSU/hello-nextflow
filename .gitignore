@@ -2,3 +2,4 @@ work/
 .nextflow/
 output/
 .nextflow.log*
+bash_results/
