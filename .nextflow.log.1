@@ -1,0 +1,84 @@
+May-03 11:34:28.743 [main] DEBUG nextflow.cli.Launcher - $> nextflow run hello.nf
+May-03 11:34:28.873 [main] INFO  nextflow.cli.CmdRun - N E X T F L O W  ~  version 22.04.0
+May-03 11:34:29.052 [main] INFO  nextflow.cli.CmdRun - Launching `hello.nf` [thirsty_lamport] DSL2 - revision: 2238521d6a
+May-03 11:34:29.073 [main] DEBUG nextflow.plugin.PluginsFacade - Setting up plugin manager > mode=prod; plugins-dir=/home/aaronfishman/.nextflow/plugins; core-plugins: nf-amazon@1.7.1,nf-azure@0.13.1,nf-console@1.0.3,nf-ga4gh@1.0.3,nf-google@1.1.4,nf-sqldb@0.4.0,nf-tower@1.4.0
+May-03 11:34:29.076 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins default=[]
+May-03 11:34:29.094 [main] INFO  org.pf4j.DefaultPluginStatusProvider - Enabled plugins: []
+May-03 11:34:29.096 [main] INFO  org.pf4j.DefaultPluginStatusProvider - Disabled plugins: []
+May-03 11:34:29.100 [main] INFO  org.pf4j.DefaultPluginManager - PF4J version 3.4.1 in 'deployment' mode
+May-03 11:34:29.114 [main] INFO  org.pf4j.AbstractPluginManager - No plugins
+May-03 11:34:29.221 [main] DEBUG nextflow.Session - Session uuid: 7bdeebf2-fd21-4d97-91ce-64b1d46e2429
+May-03 11:34:29.222 [main] DEBUG nextflow.Session - Run name: thirsty_lamport
+May-03 11:34:29.227 [main] DEBUG nextflow.Session - Executor pool size: 4
+May-03 11:34:29.296 [main] DEBUG nextflow.cli.CmdRun - 
+  Version: 22.04.0 build 5697
+  Created: 23-04-2022 18:00 UTC (19:00 BST)
+  System: Linux 5.13.0-1022-aws
+  Runtime: Groovy 3.0.10 on OpenJDK 64-Bit Server VM 11.0.15+10-Ubuntu-0ubuntu0.20.04.1
+  Encoding: UTF-8 (UTF-8)
+  Process: 7227@ranch-239 [192.168.4.47]
+  CPUs: 4 - Mem: 15.4 GB (11.7 GB) - Swap: 0 (0)
+May-03 11:34:29.338 [main] DEBUG nextflow.Session - Work-dir: /home/aaronfishman/repos/nf-demo/work [ext2/ext3]
+May-03 11:34:29.339 [main] DEBUG nextflow.Session - Script base path does not exist or is not a directory: /home/aaronfishman/repos/nf-demo/bin
+May-03 11:34:29.355 [main] DEBUG nextflow.executor.ExecutorFactory - Extension executors providers=[]
+May-03 11:34:29.391 [main] DEBUG nextflow.Session - Observer factory: DefaultObserverFactory
+May-03 11:34:29.430 [main] DEBUG nextflow.cache.CacheFactory - Using Nextflow cache factory: nextflow.cache.DefaultCacheFactory
+May-03 11:34:29.443 [main] DEBUG nextflow.util.CustomThreadPool - Creating default thread pool > poolSize: 5; maxThreads: 1000
+May-03 11:34:29.608 [main] DEBUG nextflow.Session - Session start invoked
+May-03 11:34:30.745 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
+May-03 11:34:31.075 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+May-03 11:34:31.076 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+May-03 11:34:31.081 [main] DEBUG nextflow.executor.Executor - [warm up] executor > local
+May-03 11:34:31.089 [main] DEBUG n.processor.LocalPollingMonitor - Creating local task monitor for executor 'local' > cpus=4; memory=15.4 GB; capacity=4; pollInterval=100ms; dumpInterval=5m
+May-03 11:34:31.234 [main] DEBUG nextflow.Session - Workflow process names [dsl2]: qc_fastq
+May-03 11:34:31.235 [main] DEBUG nextflow.Session - Ignite dataflow network (2)
+May-03 11:34:31.261 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > qc_fastq
+May-03 11:34:31.264 [main] DEBUG nextflow.script.ScriptRunner - > Await termination 
+May-03 11:34:31.266 [main] DEBUG nextflow.Session - Session await
+May-03 11:34:31.262 [PathVisitor-1] DEBUG nextflow.file.PathVisitor - files for syntax: glob; folder: /home/aaronfishman/repos/nf-demo/samples/; pattern: *_{1,2}.fastq.gz; options: [:]
+May-03 11:34:31.673 [Task submitter] DEBUG nextflow.executor.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+May-03 11:34:31.685 [Task submitter] INFO  nextflow.Session - [3e/b9e90c] Submitted process > qc_fastq (1)
+May-03 11:34:31.744 [Task submitter] DEBUG nextflow.executor.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+May-03 11:34:31.746 [Task submitter] INFO  nextflow.Session - [1d/fdf00b] Submitted process > qc_fastq (2)
+May-03 11:34:31.783 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 1; name: qc_fastq (1); status: COMPLETED; exit: 0; error: -; workDir: /home/aaronfishman/repos/nf-demo/work/3e/b9e90c85fcdddead1f334c2520493b]
+May-03 11:34:31.853 [Task monitor] ERROR nextflow.processor.TaskProcessor - Error executing process > 'qc_fastq (1)'
+
+Caused by:
+  Missing value declared as output parameter: $name
+
+Command executed:
+
+  echo "Processing files..."
+  echo "    name: sampleA"
+  echo "    read_1_path: sampleA_1.fastq.gz"
+  echo "    read_2_path: sampleA_2.fastq.gz"
+  
+  echo "Writing output..."
+  touch output_1.fastq.gz
+  touch output_2.fastq.gz
+
+Command exit status:
+  0
+
+Command output:
+  Processing files...
+      name: sampleA
+      read_1_path: sampleA_1.fastq.gz
+      read_2_path: sampleA_2.fastq.gz
+  Writing output...
+
+Work dir:
+  /home/aaronfishman/repos/nf-demo/work/3e/b9e90c85fcdddead1f334c2520493b
+
+Tip: view the complete command output by changing to the process work dir and entering the command `cat .command.out`
+May-03 11:34:31.894 [Task monitor] DEBUG nextflow.Session - Session aborted -- Cause: Missing value declared as output parameter: $name
+May-03 11:34:31.952 [main] DEBUG nextflow.Session - Session await > all process finished
+May-03 11:34:31.953 [main] DEBUG nextflow.Session - Session await > all barriers passed
+May-03 11:34:31.971 [main] WARN  n.processor.TaskPollingMonitor - Killing running tasks (1)
+May-03 11:34:31.990 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 2; name: qc_fastq (2); status: COMPLETED; exit: 0; error: -; workDir: /home/aaronfishman/repos/nf-demo/work/1d/fdf00b0dc9c132e9a8fcd828e42b02]
+May-03 11:34:31.997 [main] DEBUG nextflow.executor.LocalTaskHandler - Unable to kill qc_fastq (2) -- command: kill -TERM 7329; exit: 1 
+ bash: line 0: kill: (7329) - No such process
+
+May-03 11:34:32.005 [main] DEBUG nextflow.trace.WorkflowStatsObserver - Workflow completed > WorkflowStats[succeededCount=0; failedCount=3; ignoredCount=0; cachedCount=0; pendingCount=0; submittedCount=0; runningCount=-1; retriesCount=0; abortedCount=0; succeedDuration=0ms; failedDuration=10ms; cachedDuration=0ms;loadCpus=-1; loadMemory=0; peakRunning=1; peakCpus=1; peakMemory=0; ]
+May-03 11:34:32.079 [main] DEBUG nextflow.cache.CacheDB - Closing CacheDB done
+May-03 11:34:32.103 [main] DEBUG nextflow.script.ScriptRunner - > Execution complete -- Goodbye
