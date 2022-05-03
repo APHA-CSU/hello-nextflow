@@ -20,7 +20,8 @@ sudo apt-get -y update && sudo DEBIAN_FRONTEND=noninteractive apt-get install -y
 	bioperl \
 	python3 \
 	python3-pip \
-	ncbi-blast+
+	ncbi-blast+ \
+	ncbi-tools-bin
 
 sudo echo yes | cpan Bio::Perl
 sudo cpan Bio::SearchIO::hmmer3

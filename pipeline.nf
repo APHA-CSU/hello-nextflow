@@ -65,20 +65,33 @@ process clean {
     """
 }
 
-
-// Assembles
-process assemble {
-    
+// Assemble
+process assemble {    
     input:
         tuple val(name), path(read_1), path(read_2)
 
     output:
-        tuple val(name), path("preprocessed_read_1.fastq.gz"), path("preprocessed_read_2.fastq.gz")
+        tuple val(name), path("assembly.fasta")
 
     script:
     """
         # Execute Unicycler
         unicycler -1 ${read_1} -2 ${read_2} -o ./ --threads ${threads}
+    """
+}
+
+// Annotate
+process annotate {
+    publishDir "$output_dir"
+
+    input:
+        tuple val(name), path('assembly.fasta')
+
+    script:
+    """
+        # Execute Prokka
+        mkdir results/
+        prokka --force assembly.fasta
     """
 }
 
@@ -91,4 +104,5 @@ Notice how the pipeline's workflow is structured:
 workflow {
     clean(read_pairs)
     assemble(clean.out)
+    annotate(assemble.out)
 }
