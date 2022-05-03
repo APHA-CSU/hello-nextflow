@@ -41,6 +41,31 @@ process qc {
     """
 }
 
+// Fastp
+process preprocess {
+    
+    input:
+        tuple val(name), path(read_1), path(read_2)
+
+    output:
+        tuple val(name), path("preprocessed_read_1.fastq.gz"), path("preprocessed_read_2.fastq.gz")
+
+    script:
+    """
+        # Execute fastp
+        fastp -i $read_1 \
+            -I $read_2 -o preprocessed_read_1.fastq.gz \
+            -O preprocessed_read_2.fastq.gz \
+            -j fastp.json \
+            -h fastp.html \
+            -q 30 \
+            --trim_poly_g \
+            --length_required 80 \
+            --thread ${threads}
+    """
+}
+
+
 
 /* The workflow defines how all the steps of the pipeline connect together. 
 
@@ -48,5 +73,5 @@ Notice how the pipeline's workflow is structured:
     read pairs channel --> qc_fastq --> fastq_to_fasta --> annotate
 */
 workflow {
-    qc(read_pairs)
+    preprocess(read_pairs)
 }
