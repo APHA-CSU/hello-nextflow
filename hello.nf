@@ -1,8 +1,17 @@
 #!/usr/bin/env nextflow
 
+/* A minimal pipeline to illustrate how to use nextflow.
 
-lists = Channel.fromFilePairs( "$PWD/samples/*_{1,2}.fastq.gz", flat: true )
+    The Input to the pipeline is a path to a directory (input_dir) that contains fastq.gz read pairs. 
+    The read pairs should be formatted: NAME_1.fastq.gz, NAME_2.fastq.gz
+
+    The Output of the pipeline is stored in the output directory (output_dir) defined below 
+*/
+
+input_dir = "$PWD/samples/"
 output_dir = "$PWD/output/"
+
+lists = Channel.fromFilePairs( "$input_dir/*_{1,2}.fastq.gz", flat: true )
 
 process qc_fastq {
     
