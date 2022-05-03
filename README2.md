@@ -1,7 +1,4 @@
-# hello-nextflow
-A minimal DSL2 nextflow example for processing fastq read pairs
-
-## Setup
+# apprentice-install
 
 Install scripts for APHA bioinformatics apprentice project.
 
@@ -18,7 +15,7 @@ the APHA bioinformatics project. These are:
 
 along with all of their depedencies.
 
-### Installation
+## Installation
 
 To dowload and run the install script, execute the following commands from within your user home
 directory (e.g. `/home/nickpestell`):
@@ -34,11 +31,4 @@ If ran with no errors the final output should be:
 ```
 Installation complete!
 Apprentices, YOU ROCK!
-```
-
-## Run
-
-To run:
-```
-nextflow run hello.nf
 ```
