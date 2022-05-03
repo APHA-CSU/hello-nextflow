@@ -41,8 +41,8 @@ process qc {
     """
 }
 
-// Fastp
-process preprocess {
+// Clean Reads
+process clean {
     
     input:
         tuple val(name), path(read_1), path(read_2)
@@ -66,6 +66,22 @@ process preprocess {
 }
 
 
+// Assembles
+process assemble {
+    
+    input:
+        tuple val(name), path(read_1), path(read_2)
+
+    output:
+        tuple val(name), path("preprocessed_read_1.fastq.gz"), path("preprocessed_read_2.fastq.gz")
+
+    script:
+    """
+        # Execute Unicycler
+        unicycler -1 ${read_1} -2 ${read_2} -o ./ --threads ${threads}
+    """
+}
+
 
 /* The workflow defines how all the steps of the pipeline connect together. 
 
@@ -73,5 +89,6 @@ Notice how the pipeline's workflow is structured:
     read pairs channel --> qc_fastq --> fastq_to_fasta --> annotate
 */
 workflow {
-    preprocess(read_pairs)
+    clean(read_pairs)
+    assemble(clean.out)
 }
