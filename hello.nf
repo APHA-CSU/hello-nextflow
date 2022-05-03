@@ -6,13 +6,19 @@
     The read pairs should be formatted: NAME_1.fastq.gz, NAME_2.fastq.gz
 
     The Output of the pipeline is stored in the output directory (output_dir) defined below 
+
+    The pipeline's workflow is structured:
+        (input) fastq read pair --> qc_fastq --> fastq_to_fasta --> annotate --> (ouput) txt file
 */
 
+// Edit these lines to change what samples you are providing, and where output is saved to
 input_dir = "$PWD/samples/"
 output_dir = "$PWD/output/"
 
-lists = Channel.fromFilePairs( "$input_dir/*_{1,2}.fastq.gz", flat: true )
+// Pairs read files together, so they can passed through the pipeline together
+read_pairs = Channel.fromFilePairs( "$input_dir/*_{1,2}.fastq.gz", flat: true )
 
+// Quality control. Produces two fastq files from two fastq files, representing the read pair
 process qc_fastq {
     
     input:
@@ -34,6 +40,7 @@ process qc_fastq {
     """
 }
 
+// Assembly. Produces an assembled fastq file from a fastq read pair
 process fastq_to_fasta {
     input:
         tuple val(name), path(read_1_path), path(read_2_path)
@@ -53,6 +60,7 @@ process fastq_to_fasta {
     """
 }
 
+// Annotate. Analyse the assembled fasta and produces an output txt file
 process annotate {
     publishDir "$output_dir/", mode: 'copy', pattern: '*.txt'
 
@@ -73,8 +81,13 @@ process annotate {
     """
 }
 
+/* The workflow defines how all the steps of the pipeline connect together. 
+
+Notice how the pipeline's workflow is structured:
+    read pairs channel --> qc_fastq --> fastq_to_fasta --> annotate
+*/
 workflow {
-    qc_fastq(lists)
+    qc_fastq(read_pairs)
     fastq_to_fasta(qc_fastq.out)
     annotate(fastq_to_fasta.out)
 }

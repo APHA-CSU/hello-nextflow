@@ -1,4 +1,4 @@
 work/
 .nextflow/
 output/
-.nextflow.log
+.nextflow.log*
