@@ -6,9 +6,6 @@ baseDir=$PWD
 read1=SRR11947553_sub_1.fq.gz
 read2=SRR11947553_sub_2.fq.gz
 
-read1=/home/aaronfishman/repos/btb-seq/tests/data/tinyreads/tinyreads_S1_R1_X.fastq.gz
-read2=/home/aaronfishman/repos/btb-seq/tests/data/tinyreads/tinyreads_S1_R2_X.fastq.gz
-
 # Create new directory to store all results
 mkdir $baseDir/bash_results
 resultsDir=$baseDir/bash_results
