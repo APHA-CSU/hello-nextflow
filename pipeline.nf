@@ -33,12 +33,14 @@ read_pairs = Channel.fromFilePairs("$input_dir/*_{1,2}.fq.gz", flat: true)
 
 // Quality control. Produces two fastq files from two fastq files, representing the read pair
 process qc {
-    
+    publishDir "$output_dir/qc/$name/"
+    tag "$name"
+
     input:
-        tuple val(name), path(read_1_path), path(read_2_path)
+        tuple val(name), path(read_1), path(read_2)
 
     output:
-        tuple val(name), path("output_1.fastq.gz"), path("output_2.fastq.gz")
+        tuple val(name), path(read_1), path(read_2)
 
     script:
     """
@@ -46,7 +48,7 @@ process qc {
         mkdir multiqc/
 
         # Execute FastQC
-        fastqc --outdir fastqc/ --threads ${threads} $read_1_path $read_2_path
+        fastqc --outdir fastqc/ --threads ${threads} $read_1 $read_2
 
         # Execute MultiQC
         multiqc fastqc/ --outdir multiqc/
@@ -55,6 +57,8 @@ process qc {
 
 // Clean Reads
 process clean {
+    publishDir "$output_dir/clean/$name/"
+    tag "$name"
     
     input:
         tuple val(name), path(read_1), path(read_2)
@@ -79,6 +83,9 @@ process clean {
 
 // Assemble
 process assemble {    
+    publishDir "$output_dir/assemble/$name/"
+    tag "$name"
+
     input:
         tuple val(name), path(read_1), path(read_2)
 
@@ -94,7 +101,8 @@ process assemble {
 
 // Annotate
 process annotate {
-    publishDir "$output_dir"
+    publishDir "$output_dir/annotate/$name/"
+    tag "$name"
 
     input:
         tuple val(name), path('assembly.fasta')
@@ -115,7 +123,8 @@ Notice how the pipeline's workflow is structured:
     read pairs channel --> qc_fastq --> fastq_to_fasta --> annotate
 */
 workflow {
-    clean(read_pairs)
+    qc(read_pairs)
+    clean(qc.out)
     assemble(clean.out)
     annotate(assemble.out)
 }
