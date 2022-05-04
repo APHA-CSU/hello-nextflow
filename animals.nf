@@ -1,22 +1,14 @@
 #!/usr/bin/env nextflow
 
-/* A minimal pipeline to illustrate how to use nextflow.
-
-    The Input to the pipeline is a path to a directory (input_dir) that contains fastq.gz read pairs. 
-    The read pairs should be formatted: NAME_1.fastq.gz, NAME_2.fastq.gz
-
-    The Output of the pipeline is stored in the output directory (output_dir) defined below 
-
-    The pipeline's workflow is structured:
-        (input) fastq read pair --> qc_fastq --> fastq_to_fasta --> annotate --> (ouput) txt file
+/* An animal pipeline to illustrate how to use nextflow.
 */
 
 // Pairs read files together, so they can passed through the pipeline together
-animals = Channel.fromPath('animals/*.txt').view()
+animals = Channel.fromPath('animals/*.txt').map {file -> tuple(file.baseName, file)}
 
-process names {
+process noise {
     input:
-        val(name)
+        val(name), path("animal.txt")
 
     output:
         stdout
