@@ -25,7 +25,7 @@ directory (e.g. `/home/nickpestell`):
 
 1. `sudo apt-get update`
 2. `sudo apt-get install git`
-3. `git clone https://github.com/nick-pestell/apprentice-install.git`
+3. `git clone https://github.com/APHA-CSU/hello-nextflow.git`
 4. `cd apprentice-install`
 5. `bash install.bash`
 
