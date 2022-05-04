@@ -1,9 +1,9 @@
 #!/usr/bin/env nextflow
 
-/* A minimal pipeline to illustrate how to use nextflow.
+/* A WGS pipeline that illustrates how to use nextflow.
 
     The Input to the pipeline is a path to a directory (input_dir) that contains fastq.gz read pairs. 
-    The read pairs should be formatted: NAME_1.fastq.gz, NAME_2.fastq.gz
+    The read pairs should be formatted: NAME_1.fq.gz, NAME_2.fq.gz
 
     The Output of the pipeline is stored in the output directory (output_dir) defined below 
 
@@ -11,13 +11,25 @@
         (input) fastq read pair --> qc_fastq --> fastq_to_fasta --> annotate --> (ouput) txt file
 */
 
-// Edit these lines to change what samples you are providing, and where output is saved to
-input_dir = "$PWD/samples/"
-output_dir = "$PWD/output/"
-threads = 4
+
+/* User Config 
+    The lines of codes a human would typically edit to setup their run
+    Edit these lines to change what samples you are providing, and where output is saved to
+*/
+
+input_dir = "$PWD/samples/"  // Directory that contains samples
+output_dir = "$PWD/output/"  // Output samples
+threads = 4                  // Use to setup certain jobs
+
+/* Setup
+    Preparation before starting the pipeline
+*/
 
 // Pairs read files together, so they can passed through the pipeline together
-read_pairs = Channel.fromFilePairs( "$input_dir/*_{1,2}.fq.gz", flat: true )
+read_pairs = Channel.fromFilePairs("$input_dir/*_{1,2}.fq.gz", flat: true)
+
+
+/* Process Definitions */
 
 // Quality control. Produces two fastq files from two fastq files, representing the read pair
 process qc {
@@ -95,8 +107,9 @@ process annotate {
     """
 }
 
+/* Workflow
 
-/* The workflow defines how all the steps of the pipeline connect together. 
+Defines how all the steps of the pipeline connect together. 
 
 Notice how the pipeline's workflow is structured:
     read pairs channel --> qc_fastq --> fastq_to_fasta --> annotate

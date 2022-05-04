@@ -1,13 +1,19 @@
 #!/bin/bash
 
+### Boilerplate
+
 # Error handling
 set -eo pipefail
+
+### User Config
 
 # Set global parameters (edit these parameters)
 threads=4
 baseDir=$PWD
 read1=SRR11947553_sub_1.fq.gz
 read2=SRR11947553_sub_2.fq.gz
+
+### Setup
 
 # Create new directory to store all results
 mkdir $baseDir/bash_results
@@ -24,6 +30,8 @@ fastqcDir=$resultsDir/1.fastqc_results
 cleanDir=$resultsDir/2.clean_reads
 assemblyDir=$resultsDir/3.genome_assembly
 annotateDir=$resultsDir/4.annotate_genome
+
+### Run Pipeline
 
 # To run this script, navigate to the baseDir and type this command:
 # bash run_bash.sh
