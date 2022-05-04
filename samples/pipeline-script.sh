@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Error handling
+set -eo pipefail
+
 # Set global parameters (edit these parameters)
 threads=4
 baseDir=$PWD
