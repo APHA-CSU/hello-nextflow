@@ -11,29 +11,22 @@
         (input) fastq read pair --> qc_fastq --> fastq_to_fasta --> annotate --> (ouput) txt file
 */
 
-// Channels store queues of data
-// This channel locates .txt files
-filenames = Channel.fromPath('hello/*.txt')
+// Pairs read files together, so they can passed through the pipeline together
+animals = Channel.fromPath('animals/*.txt').view()
 
-// A process is a template for stting up and running a script
 process names {
-    // Input is a string that represents the path
     input:
         val(name)
 
-    // Output is what the process would normally print to the terminal
     output:
         stdout
 
-    // This scripts prints the $name of the input
     script:
     """
         echo Name: $name
     """
 }
 
-// The workflow defines how channels connect to processes
 workflow{
-    // Plug the animals channel into the names process and view the output
-    names(filenames) | view
+    names(animals)
 }

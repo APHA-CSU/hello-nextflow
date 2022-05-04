@@ -33,7 +33,7 @@ read_pairs = Channel.fromFilePairs("$input_dir/*_{1,2}.fq.gz", flat: true)
 
 // Quality control. Produces two fastq files from two fastq files, representing the read pair
 process qc {
-    publishDir "$output_dir/qc/$name/"
+    publishDir "$output_dir/$name/"
     tag "$name"
 
     input:
@@ -57,7 +57,7 @@ process qc {
 
 // Clean Reads
 process clean {
-    publishDir "$output_dir/clean/$name/"
+    publishDir "$output_dir/$name/"
     tag "$name"
     
     input:
@@ -83,7 +83,7 @@ process clean {
 
 // Assemble
 process assemble {    
-    publishDir "$output_dir/assemble/$name/"
+    publishDir "$output_dir/$name/"
     tag "$name"
 
     input:
@@ -101,17 +101,20 @@ process assemble {
 
 // Annotate
 process annotate {
-    publishDir "$output_dir/annotate/$name/"
+    publishDir "$output_dir/$name/prokka/"
     tag "$name"
 
     input:
-        tuple val(name), path('assembly.fasta')
+        tuple val(name), path('genome.fasta')
+
+    output:
+        path('*')
 
     script:
     """
         # Execute Prokka
         mkdir results/
-        prokka --force assembly.fasta
+        prokka --force genome.fasta
     """
 }
 
