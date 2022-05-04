@@ -2,7 +2,7 @@
 
 /* A WGS pipeline that illustrates how to use nextflow.
 
-    The Input to the pipeline is a path to a directory (input_dir) that contains fastq.gz read pairs. 
+    The Input to the pipeline is a path to a directory (input_dir) that contains fq.gz read pairs. 
     The read pairs should be formatted: NAME_1.fq.gz, NAME_2.fq.gz
 
     The Output of the pipeline is stored in the output directory (output_dir) defined below 
