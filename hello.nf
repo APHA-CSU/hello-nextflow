@@ -8,6 +8,7 @@ filenames = Channel.fromPath('hello/*.txt')
 
 // A process is a template for stting up and running a script
 process names {
+    // Save data from the output: section
     publishDir 'hello-output/'
 
     // Input is a string that represents the path
