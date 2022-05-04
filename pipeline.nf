@@ -40,7 +40,7 @@ process qc {
         tuple val(name), path(read_1), path(read_2)
 
     output:
-        tuple val(name), path(read_1), path(read_2)
+        path('*')
 
     script:
     """
@@ -64,14 +64,14 @@ process clean {
         tuple val(name), path(read_1), path(read_2)
 
     output:
-        tuple val(name), path("preprocessed_read_1.fastq.gz"), path("preprocessed_read_2.fastq.gz")
+        tuple val(name), path("preprocessed_1.fastq.gz"), path("preprocessed_2.fastq.gz")
 
     script:
     """
         # Execute fastp
         fastp -i $read_1 \
-            -I $read_2 -o preprocessed_read_1.fastq.gz \
-            -O preprocessed_read_2.fastq.gz \
+            -I $read_2 -o preprocessed_1.fastq.gz \
+            -O preprocessed_2.fastq.gz \
             -j fastp.json \
             -h fastp.html \
             -q 30 \
@@ -124,7 +124,7 @@ Notice how the pipeline's workflow is structured:
 */
 workflow {
     qc(read_pairs)
-    clean(qc.out)
+    clean(read_pairs)
     assemble(clean.out)
     annotate(assemble.out)
 }
