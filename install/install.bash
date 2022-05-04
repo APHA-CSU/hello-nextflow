@@ -23,7 +23,8 @@ sudo apt-get -y update && sudo DEBIAN_FRONTEND=noninteractive apt-get install -y
 	ncbi-blast+ \
 	ncbi-tools-bin
 
-sudo echo yes | cpan Bio::Perl
+echo yes | cpan
+sudo cpan Bio::Perl
 sudo cpan Bio::SearchIO::hmmer3
 
 #python
