@@ -8,7 +8,8 @@
     The Output of the pipeline is stored in the output directory (output_dir) defined below 
 
     The pipeline's workflow is structured:
-        (input) fastq read pair --> qc_fastq --> fastq_to_fasta --> annotate --> (ouput) txt file
+        (input) fastq read pair --> fastq_to_fasta --> annotate --> output txt file
+                               \--> qc_fastq --> output html report
 */
 
 
@@ -31,7 +32,7 @@ read_pairs = Channel.fromFilePairs("$input_dir/*_{1,2}.fq.gz", flat: true)
 
 /* Process Definitions */
 
-// Quality control. Produces two fastq files from two fastq files, representing the read pair
+// Quality control. Produces a qc report from two fastq files
 process qc {
     publishDir "$output_dir/$name/"
     tag "$name"
